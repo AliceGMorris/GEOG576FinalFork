@@ -114,41 +114,52 @@
     // Renderer for building heights style      
     const renderer = {
     type: "class-breaks",
-    classBreakInfos: [
-      {
-        minValue: 0,
-        maxValue: 11.99999,
-        symbol: less12,
-        label: "< 12 feet" // label for symbol in legend
-      },
-      {
-        minValue: 12,
-        maxValue: 20.99999,
-        symbol: less21,
-        label: "< 21 feet" // label for symbol in legend
-      },
-      {
-        minValue: 21,
-        maxValue: 40.99999,
-        symbol: less41,
-        label: "< 41 feet" // label for symbol in legend
-      },
-      {
-        minValue: 41,
-        maxValue: 92.99999,
-        symbol: less93,
-        label: "< 93 feet" // label for symbol in legend
-      },
-       {
-        minValue: 93,
-        maxValue: 999999999999999999999,
-        symbol: more93,
-        label: "> 93 feet" // label for symbol in legend
-      }
-    ]
-  };
-
-
+    legendOptions: {
+            title: "Building Heights"
+          },
+          defaultSymbol: {
+            type: "simple-fill",
+            color: "black",
+            style: "backward-diagonal",
+            outline: {
+              width: 0.5,
+              color: [50, 50, 50, 0.6]
+            }
+          },
+          defaultLabel: "no data",
+          classBreakInfos: [
+            {
+              minValue: 0,
+              maxValue: 11.99999,
+              symbol: less12,
+              label: "< 12 feet" // label for symbol in legend
+            },
+            {
+              minValue: 12,
+              maxValue: 20.99999,
+              symbol: less21,
+              label: "< 21 feet" // label for symbol in legend
+            },
+            {
+              minValue: 21,
+              maxValue: 40.99999,
+              symbol: less41,
+              label: "< 41 feet" // label for symbol in legend
+            },
+            {
+              minValue: 41,
+              maxValue: 92.99999,
+              symbol: less93,
+              label: "< 93 feet" // label for symbol in legend
+            },
+             {
+              minValue: 93,
+              maxValue: 999999999999999999999,
+              symbol: more93,
+              label: "> 93 feet" // label for symbol in legend
+            }
+          ]
+        };
           
         // Adding the const for the Building Footprint feature layer
         const footprintsLayer = new FeatureLayer({

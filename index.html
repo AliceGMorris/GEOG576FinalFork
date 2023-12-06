@@ -12,6 +12,13 @@
   <link rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/light/main.css">
   <script src="https://js.arcgis.com/4.27/"></script>
 
+   <!-- CSS to make a full screen map -->
+  <style>
+      html,
+      body,  
+      #viewDiv {padding: 0;  margin: 0;  height: 100%;  width: 100%}
+  </style>
+
   <script> 
     <!-- Loading the modules -->
     require(["esri/config", "esri/Map", "esri/views/MapView", "esri/widgets/BasemapGallery", 
@@ -262,13 +269,6 @@
 
     });  
   </script>
-  
-  <!-- CSS to make a full screen map -->
-  <style>
-      html,
-      body,  
-      #viewDiv {padding: 0;  margin: 0;  height: 100%;  width: 100%}
-    </style>
   
 </head>
   

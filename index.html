@@ -12,6 +12,21 @@
   <link rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/light/main.css">
   <script src="https://js.arcgis.com/4.27/"></script>
 
+  <style>
+    
+    .header {
+        display: flex;
+        justify-content: space-between; 
+        align-items: center; 
+        text-align: left;
+        background: #0077D4; /* IAT blue */
+        color: rgb(255, 255, 255);
+        padding: 10px 20px; 
+        height: 44px;
+      }
+
+    </style>
+
   <script> 
     <!-- Loading the modules -->
     require(["esri/config", "esri/Map", "esri/views/MapView", "esri/widgets/BasemapGallery", 
@@ -274,6 +289,11 @@
 </head>
   
 <body>
+  <!-- the div to display the header-->
+  <div class = "header">
+    <h1> LA Building Footprint</h1> 
+  </div>
+
     <div id="viewDiv"></div>
 </body>
   

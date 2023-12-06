@@ -18,16 +18,11 @@
       body,  
       #viewDiv {padding: 0;  margin: 0;  height: 100%;  width: 100%}
 
-      #titleDiv {  
-        width: 100%;  
-        height: 15%;  
-        margin-left: -2em;
-        line-height: 1em;  
-        text-align: center;  
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
+      #optionsDiv {
+        background-color: white;
+        color: black;
+        padding: 10px;
+        max-width: 450px;
       }
   </style>
 
@@ -263,6 +258,76 @@
      }), "top-left"
      );
 
+      // Add query box to map
+      view.ui.add("optionsDiv", "bottom-left");
+          
+      // Create query
+      let query = footprintsLayer.createQuery();
+
+      var resultsLayer = new GraphicsLayer({
+        title: "Query"
+      });
+
+      // when query changes, change values
+      const queryOpts = document.getElementById("query-type");
+
+      queryOpts.addEventListener("change", () => {
+        switch (queryOpts.value) {
+          // values set based on building height
+          case "less12":
+            query.where = "HEIGHT < 12";
+            query.outFields = ["*"];
+            query.returnGeometry = true;
+            queryFeat().then(updateMap);
+            break
+          case "less21":
+            query.where = "HEIGHT < 21";
+            query.outFields = ["*"];
+            query.returnGeometry = true;
+            queryFeat().then(updateMap);
+            break
+          case "less41":
+            query.where = "HEIGHT < 41";
+            query.outFields = ["*"];
+            query.returnGeometry = true;
+            queryFeat().then(updateMap);
+            break
+          case "less93":
+            query.where = "HEIGHT < 93";
+            query.outFields = ["*"];
+            query.returnGeometry = true;
+            queryFeat().then(updateMap);
+            break
+          case "more":
+            query.where = "HEIGHT >= 93";
+            query.outFields = ["*"];
+            query.returnGeometry = true;
+            queryFeat().then(updateMap);
+            break
+          default:
+            map.remove(resultsLayer);
+            map.add(footprintsLayer);   
+        }
+      });
+
+      //Query the map
+      function queryFeat() {
+        return footprintsLayer.queryFeatures(query)
+      };
+
+      
+
+
+
+
+
+
+
+
+
+
+          
+
      // Create the legend
      const legend = new Legend({
         view: view,
@@ -285,10 +350,17 @@
 </head>
   
 <body>
-  <div id="titleDiv">
-      <div id="mainTitle"><h1>Los Angeles Building Footprints</h1></div>
-  </div> 
   <div id="viewDiv"></div>
+  
+  <div id="optionsDiv" class="esri-widget">
+    <p>Select a building height range.</p>
+    <select id="query-type" class="esri-widget">
+      <option value="all">All Buildings</option>
+      <option value="less12">Buildings < 12 feet tall</option>
+      <option value="less21">Buildings < 21 feet tall</option>
+      <option value="less41">Buildings < 41 feet tall</option>
+      <option value="less93">Buildings < 93 feet tall</option>
+      <option value="more93">Buildings >= 93 feet tall</option>
 </body>
   
 </html>

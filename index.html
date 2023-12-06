@@ -76,34 +76,34 @@
         index: 0
      });
           
-     // Adding the const for the BMP feature layer
-     const bmpLayer = new FeatureLayer({
-        url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/BMP_Facilities/FeatureServer/0",
+     // Adding the const for the Building Footprint feature layer
+     const footprintsLayer = new FeatureLayer({
+        url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/LA_Buildings/FeatureServer",
         outFields: ["*"],
-        renderer: bmpRenderer, //calling the icon
-        labelingInfo: [bmpLabels], //adding the AGOL labels
+        //renderer: bmpRenderer, //calling the icon
+        //labelingInfo: [bmpLabels], //adding the AGOL labels
         popupTemplate: {
-            title: "BMP (Best Management Practice)",
+            title: "LA Building Footprints",
             content: "<p>Attribute Information is incomplete and may show missing values.</p>" +
-                     "<ul><li>BMP Name: {BMP_Name}</li>" +
-                     "<li>Date Last Inspected: {Date_Last_}</li>" +
-                     "<li>Name of Inspector: {Last_Field}</li>" +
+                     "<ul><li>Building Height: {HEIGHT}</li>" +
+                     "<li>Code: {CODE}</li>" +
                      "<li>Needs Field Inspection: {Field_Insp}</li></ul>"
         },
      });
+          
+    // Add Building Footprints to the map
+     map.add(footprintsLayer); 
 
-     map.add(bmpLayer); // Add BMP's to the map
-
-     // Set the BMP point layer's LayerInfo
-     const pointInfosBMP = {
-        layer: bmpLayer,
-        title: "BMP Facilities"
+     // Set the Building Footprint point layer's LayerInfo
+     const pointInfosfootprints = {
+        layer: footprintsLayer,
+        title: "LA Building Footprints"
      }
           
      // Create Editor
      const editor = new Editor({
         view: view,
-        layerInfos: [pointInfosBMP]
+        layerInfos: [pointInfosfootprints]
      });
 
      // Create the expand editor
@@ -159,7 +159,7 @@
      // Create the legend
      const legend = new Legend({
         view: view,
-        layerInfos: [pointInfosBMP]
+        layerInfos: [pointInfosfootprints]
      });
 
      // Create the expand legend

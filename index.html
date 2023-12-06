@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/light/main.css">
   <script src="https://js.arcgis.com/4.27/"></script>
 
+  <! -- leafelt css -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
   <!-- Loading the modules -->
   <script>  
     require(["esri/config", "esri/Map", "esri/views/MapView", "esri/widgets/BasemapGallery", 
@@ -26,18 +29,30 @@
       // Adding an API key  
       esriConfig.apiKey = "AAPK4fd83155c6f74dbaba989ef8d65a62e0HkzLPHOm66zEOTAE2eQ4meauWP-KHE_Axm9cNMA2Yz9b6Ovb6U5E3Wil66l4KCe_";
 
+      // Zoom to Temescal Canyon Park, CA
+      var map = L.map("map").setView([34.039, -118.533], 17); 
+    
+      // Add OSM France basemap
+      var osm_france = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+        maxZoom: 20,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
+      }).addTo(map);
+
+
+          
+
       // Create the map
-     const map = new Map({ 
-        basemap: "arcgis-navigation", // Basemap layer service - good basemap for driving
-     });
+     //const map = new Map({ 
+        //basemap: "arcgis-navigation", // Basemap layer service - good basemap for driving
+     //});
     
      // Create a 2D view
-     const view = new MapView({
-        map: map,
-        center: [-118.533, 34.039], // Zoom to Temescal Canyon Park, CA
-        zoom: 16, // Zoom level
-        container: "viewDiv", // Div element
-     });
+     //const view = new MapView({
+        //map: map,
+        //center: [-118.533, 34.039], // Zoom to Temescal Canyon Park, CA
+        //zoom: 15, // Zoom level
+        //container: "viewDiv", // Div element
+     //});
 
      // Expand widget for basemap gallery
      const basemapGalleryExpand = new Expand({
@@ -345,6 +360,12 @@
 
 </head>
 <body>
+  
     <div id="viewDiv"></div>
+
+    <!-- leaflet js -->
+    <script src="https://unpkg.com/leaflet@1.7/dist/leaflet.js"></script>
+  
 </body>
+  
 </html>

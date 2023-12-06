@@ -29,20 +29,10 @@
       // Gold Dust Basemap - City Prostak, ESRI Vector Tile Style Editor, Andrew Bernish
      const basemap = new Basemap({
 
-      const basemap = new Basemap({
-        baseLayers: [
-          new MapImageLayer({
-            url: "https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer",
-            title: "Basemap"
-          })
-        ],
-        title: "basemap",
-        id: "basemap"
-      });
-
-const map = new Map({
-  basemap: basemap
-});
+      // Create the map
+     const map = new Map({ 
+        basemap: "osm",
+     });
     
       // Create a 2D view
       const view = new MapView({

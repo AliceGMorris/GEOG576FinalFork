@@ -1,1 +1,1 @@
-# 576_final
+Final Project - Los Angeles County Building Footprints

@@ -25,14 +25,14 @@
      
      // Create the map
      const map = new Map({ 
-        basemap: "arcgis-navigation", // Basemap layer service - good basemap for driving
+        basemap: "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", // Basemap layer service - good basemap for driving
      });
     
      // Create a 2D view
      const view = new MapView({
         map: map,
-        center: [-77.487206, 37.654347], // Longitude, latitude of Public Works where employees will start from
-        zoom: 16, // Zoom level
+        center: [-118.533, 34.039], // Zoom to Temescal Canyon Park, CA
+        zoom: 17, // Zoom level
         container: "viewDiv", // Div element
      });
 

@@ -75,13 +75,86 @@
         position: "top-left",
         index: 0
      });
+
+    // Style buildings less than 12 feet tall
+    const less12 = {
+      type: "simple-fill",
+      color: "#fceffc",
+      style: "solid",
+    };
+
+    // Style buildings less than 21 feet tall
+    const less21 = {
+      type: "simple-fill",
+      color: "#bdc9e1",
+      style: "solid",
+    };
+
+    // Style buildings less than 41 feet tall
+    const less41 = {
+      type: "simple-fill",
+      color: "#74a9cf",
+      style: "solid",
+    };
           
-     // Adding the const for the Building Footprint feature layer
-     const footprintsLayer = new FeatureLayer({
+    // Style buildings less than 93 feet tall
+    const less93 = {
+      type: "simple-fill",
+      color: "#2b8cbe",
+      style: "solid",
+    };
+
+    // Style buildings greater than 93 feet tall
+    const more93 = {
+      type: "simple-fill",
+      color: "#045a8d",
+      style: "solid",
+    };
+
+    // Renderer for building heights style      
+    const renderer = {
+    type: "class-breaks",
+    classBreakInfos: [
+      {
+        minValue: 0,
+        maxValue: 11.99999,
+        symbol: less12,
+        label: "< 12 feet" // label for symbol in legend
+      },
+      {
+        minValue: 12,
+        maxValue: 20.99999,
+        symbol: less21,
+        label: "< 21 feet" // label for symbol in legend
+      },
+      {
+        minValue: 21,
+        maxValue: 40.99999,
+        symbol: less41,
+        label: "< 41 feet" // label for symbol in legend
+      },
+      {
+        minValue: 41,
+        maxValue: 92.99999,
+        symbol: less93,
+        label: "< 93 feet" // label for symbol in legend
+      },
+       {
+        minValue: 93,
+        maxValue: 999999999999999999999,
+        symbol: more93,
+        label: "> 93 feet" // label for symbol in legend
+      }
+    ]
+  };
+
+
+          
+        // Adding the const for the Building Footprint feature layer
+        const footprintsLayer = new FeatureLayer({
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/LA_Buildings/FeatureServer",
         outFields: ["*"],
-        //renderer: bmpRenderer, //calling the icon
-        //labelingInfo: [bmpLabels], //adding the AGOL labels
+        renderer: renderer,
         popupTemplate: {
             title: "LA Building Footprints",
             content: "<p>Attribute Information is incomplete and may show missing values.</p>" +

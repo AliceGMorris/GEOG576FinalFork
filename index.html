@@ -213,7 +213,7 @@
      });
 
       // Create a UI with the filter expressions
-     const sqlExpressions = ["HEIGHT = *", "HEIGHT < 12", "HEIGHT < 21", "HEIGHT < 41", "HEIGHT < 93", "HEIGHT >= 93", "NO BUILDINGS"];
+     const sqlExpressions = ["HEIGHT IS NOT NULL", "HEIGHT < 12", "HEIGHT < 21", "HEIGHT < 41", "HEIGHT < 93", "HEIGHT >= 93", "NO BUILDINGS"];
 
      // UI
      const selectFilter = document.createElement("select");

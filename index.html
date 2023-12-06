@@ -5,44 +5,19 @@
   <title>LA Building Footprint</title>
   
   <meta charset="UTF-8" />
-  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="" />
 
   <!-- Calls for the arcgis api's CSS file and JS library-->
   <link rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/light/main.css">
   <script src="https://js.arcgis.com/4.27/"></script>
 
-  <style>
-    
-  <!-- CSS to make a full screen map -->
-  html,
-  body,  
-  #viewDiv {padding: 0;  margin: 0;  height: 100%;  width: 100%}
-  
-    
-  .header {
-      display: flex;
-      justify-content: space-between; 
-      align-items: center; 
-      text-align: left;
-      background: #0077D4; /* IAT blue */
-      color: rgb(255, 255, 255);
-      padding: 10px 20px; 
-      height: 44px;
-    }
-    
+    <style>
+      <!-- CSS to make a full screen map -->
+      html,
+      body,  
+      #viewDiv {padding: 0;  margin: 0;  height: 100%;  width: 100%}
     </style>
-  
-</head>
-  
-<body>
-  
-  <!-- the div to display the header-->
-  <div class = "header">
-    <h1> Los Angeles Building Footprints</h1> 
-  </div>
-
-  <div id="viewDiv"></div>
 
   <script> 
     <!-- Loading the modules -->
@@ -296,6 +271,10 @@
     
   </script>
   
+</head>
+  
+<body>
+  <div id="viewDiv"></div>
 </body>
   
 </html>

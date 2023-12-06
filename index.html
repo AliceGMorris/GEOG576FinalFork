@@ -212,6 +212,34 @@
         index: 1
      });
 
+      // Create a UI with the filter expressions
+     const sqlExpressions = ["HEIGHT < 12", "HEIGHT < 21", "HEIGHT < 41", "HEIGHT < 93", "HEIGHT >= 93"];
+
+     // UI
+     const selectFilter = document.createElement("select");
+        selectFilter.setAttribute("class", "esri-widget esri-select");
+        selectFilter.setAttribute("style", "width: 250px; font-family: Avenir Next W00; font-size: 1em;");
+
+     sqlExpressions.forEach(function(sql){
+        let option = document.createElement("option");
+            option.value = sql;
+            option.innerHTML = sql;
+            selectFilter.appendChild(option);
+     });
+          
+      // Add Building filter to the map
+     view.ui.add(selectFilter, "bottom-right");
+
+     // Server-side filter
+     function setFeatureLayerFilter(expression) {
+        bmpLayer.definitionExpression = expression;
+     }
+
+     // Event listener
+     selectFilter.addEventListener('change', function (event) {
+        setFeatureLayerFilter(event.target.value);
+     });
+
      // Add table of contents to turn on/off layers
      const layerList = new LayerList({
         view: view,

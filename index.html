@@ -26,21 +26,10 @@
       // Adding an API key  
       esriConfig.apiKey = "AAPK4fd83155c6f74dbaba989ef8d65a62e0HkzLPHOm66zEOTAE2eQ4meauWP-KHE_Axm9cNMA2Yz9b6Ovb6U5E3Wil66l4KCe_";
 
-      // create a basemap from a dynamic mapserver
-      const basemap = new Basemap({
-        baseLayers: [
-          new MapImageLayer({
-            url: "https://osm.org/go/TYqeY_LY",
-            title: "Basemap"
-          })
-        ],
-        title: "basemap",
-        id: "basemap"
-      });
-
-      const map = new Map({
-        basemap: basemap
-      });
+      // Create the map
+     const map = new Map({ 
+        basemap: "arcgis-navigation", // Basemap layer service - good basemap for driving
+     });
     
      // Create a 2D view
      const view = new MapView({

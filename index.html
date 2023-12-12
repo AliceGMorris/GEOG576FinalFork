@@ -1,307 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
   
-<head>
-  <title>LA Building Footprint</title>
+    <head>
+        
+        <title>LA Building Footprint</title>
   
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="" />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="description" content="" />
 
-  <!-- Calls for the arcgis api's CSS file and JS library-->
-  <link rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/light/main.css">
-  <script src="https://js.arcgis.com/4.27/"></script>
+        <!-- Calls for the arcgis api's CSS file and JS library-->
+        <link rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/light/main.css">
+        <script src="https://js.arcgis.com/4.27/"></script>
 
-   <!-- CSS to make a full screen map -->
-  <style>
-      html,
-      body,  
-      #viewDiv {padding: 0;  margin: 0;  height: 100%;  width: 100%}
-  </style>
+        <!-- CSS to make a full screen map -->
+        <style>
+            html,
+            body,  
+            #viewDiv {padding: 0;  margin: 0;  height: 100%;  width: 100%}
+        </style>
 
-  <script> 
-    <!-- Loading the modules -->
-    require(["esri/config", "esri/Map", "esri/views/MapView", "esri/widgets/BasemapGallery", 
-      "esri/widgets/Locate", "esri/widgets/Search", "esri/layers/FeatureLayer",
-      "esri/renderers/SimpleRenderer", "esri/symbols/PictureMarkerSymbol", "esri/widgets/Editor",
-      "esri/widgets/Legend", "esri/widgets/Expand", "esri/renderers/UniqueValueRenderer",
-      "esri/widgets/LayerList"], 
-        function(esriConfig, Map, MapView, BasemapGallery, Locate, Search, FeatureLayer, SimpleRenderer,
-          PictureMarkerSymbol, Editor, Legend, Expand, UniqueValueRenderer, LayerList) {   
+        <script> 
+        <!-- Loading the modules -->
+        require(["esri/config", "esri/Map", "esri/views/MapView", "esri/widgets/BasemapGallery", 
+            "esri/widgets/Locate", "esri/widgets/Search", "esri/layers/FeatureLayer",
+            "esri/renderers/SimpleRenderer", "esri/symbols/PictureMarkerSymbol", "esri/widgets/Editor",
+            "esri/widgets/Legend", "esri/widgets/Expand", "esri/renderers/UniqueValueRenderer",
+            "esri/widgets/LayerList"], 
+                function(esriConfig, Map, MapView, BasemapGallery, Locate, Search, FeatureLayer, SimpleRenderer,
+                    PictureMarkerSymbol, Editor, Legend, Expand, UniqueValueRenderer, LayerList) {   
    
-      // Adding an API key  
-      esriConfig.apiKey = "AAPK4fd83155c6f74dbaba989ef8d65a62e0HkzLPHOm66zEOTAE2eQ4meauWP-KHE_Axm9cNMA2Yz9b6Ovb6U5E3Wil66l4KCe_";
+        // Adding an API key  
+        esriConfig.apiKey = "AAPK4fd83155c6f74dbaba989ef8d65a62e0HkzLPHOm66zEOTAE2eQ4meauWP-KHE_Axm9cNMA2Yz9b6Ovb6U5E3Wil66l4KCe_";
 
-      // Create the map
-     const map = new Map({ 
-        basemap: "osm",
-     });
+        // Create the map
+        const map = new Map({ 
+            basemap: "osm",
+        });
     
-      // Create a 2D view
-      const view = new MapView({
-        map: map,
-        center: [-118.533, 34.039], // Zoom to Temescal Canyon Park, CA
-        zoom: 17, // Zoom level
-        container: "viewDiv", // Div element
-      });
+        // Create a 2D view
+        const view = new MapView({
+            map: map,
+            center: [-118.533, 34.039], // Zoom to Temescal Canyon Park, CA
+            zoom: 17, // Zoom level
+            container: "viewDiv", // Div element
+        });
 
-      // Expand widget for basemap gallery
-      const basemapGalleryExpand = new Expand({
-        view: view,
-        expandTooltip: "Expand Basemaps",
-        collapseTooltip: "Collapse Basemaps",
-        content: new BasemapGallery({
-        view: view,
-        })
-      });
+        // Expand widget for basemap gallery
+        const basemapGalleryExpand = new Expand({
+            view: view,
+            expandTooltip: "Expand Basemaps",
+            collapseTooltip: "Collapse Basemaps",
+            content: new BasemapGallery({
+            view: view,
+            })
+        });
 
-     // Add the basemap gallery to the view
-     view.ui.add(basemapGalleryExpand, {
-        position: "top-right",
-        index: 0
-     });
+        // Add the basemap gallery to the view
+        view.ui.add(basemapGalleryExpand, {
+            position: "top-right",
+            index: 0
+        });
      
-     // Create a Locate widget
-     const locate = new Locate({
-        view: view,
-     });
+        // Create a Locate widget
+        const locate = new Locate({
+            view: view,
+        });
 
-     // Add the locate widget to the view
-     view.ui.add(locate, {
-        position: "top-left",
-        index: 2
-     });
+        // Add the locate widget to the view
+        view.ui.add(locate, {
+            position: "top-left",
+            index: 2
+        });
 
-     // Create a search widget
-     const searchWidget = new Search({
-        view: view,
-     });
+        // Create a search widget
+        const searchWidget = new Search({
+            view: view,
+        });
 
-     // Adds the search widget to the view
-     view.ui.add(searchWidget, {
-        position: "top-left",
-        index: 0
-     });
+        // Adds the search widget to the view
+        view.ui.add(searchWidget, {
+            position: "top-left",
+            index: 0
+        });
 
-    // Style buildings less than 12 feet tall
-    const less12 = {
-      type: "simple-fill",
-      color: "#fceffc",
-      style: "solid",
-    };
-
-    // Style buildings less than 21 feet tall
-    const less21 = {
-      type: "simple-fill",
-      color: "#bdc9e1",
-      style: "solid",
-    };
-
-    // Style buildings less than 41 feet tall
-    const less41 = {
-      type: "simple-fill",
-      color: "#74a9cf",
-      style: "solid",
-    };
-          
-    // Style buildings less than 93 feet tall
-    const less93 = {
-      type: "simple-fill",
-      color: "#2b8cbe",
-      style: "solid",
-    };
-
-    // Style buildings greater than 93 feet tall
-    const more93 = {
-      type: "simple-fill",
-      color: "#045a8d",
-      style: "solid",
-    };
-
-    // Renderer for building heights style      
-    const renderer = {
-    type: "class-breaks",
-    field: "HEIGHT",
-    legendOptions: {
-            title: "Building Heights"
-          },
-          defaultSymbol: {
+        // Style buildings less than 12 feet tall
+        const less12 = {
             type: "simple-fill",
-            color: "black",
-            style: "backward-diagonal",
-            outline: {
-              width: 0.5,
-              color: [50, 50, 50, 0.6]
+            color: "#fceffc",
+            style: "solid",
+        };
+
+        // Style buildings less than 21 feet tall
+        const less21 = {
+            type: "simple-fill",
+            color: "#bdc9e1",
+            style: "solid",
+        };
+
+        // Style buildings less than 41 feet tall
+        const less41 = {
+            type: "simple-fill",
+            color: "#74a9cf",
+            style: "solid",
+        };
+          
+        // Style buildings less than 93 feet tall
+        const less93 = {
+            type: "simple-fill",
+            color: "#2b8cbe",
+            style: "solid",
+        };
+
+        // Style buildings greater than 93 feet tall
+        const more93 = {
+            type: "simple-fill",
+            color: "#045a8d",
+            style: "solid",
+        };
+
+        // Renderer for building heights style      
+        const renderer = {
+            type: "class-breaks",
+            field: "HEIGHT",
+            legendOptions: {
+                title: "Building Heights"
+            },
+            defaultSymbol: {
+                type: "simple-fill",
+                color: "black",
+                style: "backward-diagonal",
+                outline: {
+                    width: 0.5,
+                    color: [50, 50, 50, 0.6]
+                }
+            },
+            defaultLabel: "no data",
+            classBreakInfos: [
+            {
+                minValue: 0,
+                maxValue: 11.99999,
+                symbol: less12,
+                label: "< 12 feet" // label for symbol in legend
+            },
+            {
+                minValue: 12,
+                maxValue: 20.99999,
+                symbol: less21,
+                label: "< 21 feet" // label for symbol in legend
+            },
+            {
+                minValue: 21,
+                maxValue: 40.99999,
+                symbol: less41,
+                label: "< 41 feet" // label for symbol in legend
+            },
+            {
+                minValue: 41,
+                maxValue: 92.99999,
+                symbol: less93,
+                label: "< 93 feet" // label for symbol in legend
+            },
+            {
+                minValue: 93,
+                maxValue: 999999999999999999999,
+                symbol: more93,
+                label: "> 93 feet" // label for symbol in legend
             }
-          },
-          defaultLabel: "no data",
-          classBreakInfos: [
-            {
-              minValue: 0,
-              maxValue: 11.99999,
-              symbol: less12,
-              label: "< 12 feet" // label for symbol in legend
-            },
-            {
-              minValue: 12,
-              maxValue: 20.99999,
-              symbol: less21,
-              label: "< 21 feet" // label for symbol in legend
-            },
-            {
-              minValue: 21,
-              maxValue: 40.99999,
-              symbol: less41,
-              label: "< 41 feet" // label for symbol in legend
-            },
-            {
-              minValue: 41,
-              maxValue: 92.99999,
-              symbol: less93,
-              label: "< 93 feet" // label for symbol in legend
-            },
-             {
-              minValue: 93,
-              maxValue: 999999999999999999999,
-              symbol: more93,
-              label: "> 93 feet" // label for symbol in legend
-            }
-          ]
+            ]
         };
           
         // Adding the const for the Building Footprint feature layer
         const footprintsLayer = new FeatureLayer({
-        url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/LA_Buildings/FeatureServer",
-        outFields: ["*"],
-        renderer: renderer,
-        popupTemplate: {
-            title: "LA Building Footprints",
-            content: "<p>Attribute Information is incomplete and may show missing values.</p>" +
-                     "<ul><li>Building Height: {HEIGHT} feet</li>" +
-                     "<li>Area: {AREA} sq. ft.</li>" +
-                     "<li>Code: {CODE}</li></ul>"
-        },
-     });
+            url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/LA_Buildings/FeatureServer",
+            outFields: ["*"],
+            renderer: renderer,
+            popupTemplate: {
+                title: "LA Building Footprints",
+                content: "<p>Attribute Information is incomplete and may show missing values.</p>" +
+                        "<ul><li>Building Height: {HEIGHT} feet</li>" +
+                        "<li>Area: {AREA} sq. ft.</li>" +
+                        "<li>Code: {CODE}</li></ul>"
+            },
+        });
           
-    // Add Building Footprints to the map
-     map.add(footprintsLayer); 
+        // Add Building Footprints to the map
+        map.add(footprintsLayer); 
 
-     // Set the Building Footprint point layer's LayerInfo
-     const pointInfosfootprints = {
-        layer: footprintsLayer,
-        title: "LA Building Footprints"
-     }
+        // Set the Building Footprint point layer's LayerInfo
+        const pointInfosfootprints = {
+            layer: footprintsLayer,
+            title: "LA Building Footprints"
+        }
           
-     // Create Editor
-     const editor = new Editor({
-        view: view,
-        layerInfos: [pointInfosfootprints]
-     });
+        // Create Editor
+        const editor = new Editor({
+            view: view,
+            layerInfos: [pointInfosfootprints]
+        });
 
-     // Create the expand editor
-     const editorExpand = new Expand({
-        view: view,
-        expandTooltip: "Expand Editor",
-        collapseTooltip: "Collapse Editor",
-        content: editor,
-     });
+        // Create the expand editor
+        const editorExpand = new Expand({
+            view: view,
+            expandTooltip: "Expand Editor",
+            collapseTooltip: "Collapse Editor",
+            content: editor,
+        });
 
-     // Add the expand editor widget to the view
-     view.ui.add(editorExpand, {
-        position: "top-right",
-        index: 1
-     });
+        // Add the expand editor widget to the view
+        view.ui.add(editorExpand, {
+            position: "top-right",
+            index: 1
+        });
 
-      // Create a UI with the filter expressions
-     const sqlExpressions = ["HEIGHT IS NOT NULL", "HEIGHT < 12", "HEIGHT < 21", "HEIGHT < 41", "HEIGHT < 93", "HEIGHT >= 93", "NO BUILDINGS"];
+        // Create a UI with the filter expressions
+        const sqlExpressions = ["HEIGHT IS NOT NULL", "HEIGHT < 12", "HEIGHT < 21", "HEIGHT < 41", "HEIGHT < 93", "HEIGHT >= 93", "NO BUILDINGS"];
 
-     // UI
-     const selectFilter = document.createElement("select");
+        // UI
+        const selectFilter = document.createElement("select");
         selectFilter.setAttribute("class", "esri-widget esri-select");
         selectFilter.setAttribute("style", "width: 250px; font-family: Avenir Next W00; font-size: 1em;");
 
-     sqlExpressions.forEach(function(sql){
+        sqlExpressions.forEach(function(sql){
         let option = document.createElement("option");
             option.value = sql;
             option.innerHTML = sql;
             selectFilter.appendChild(option);
-     });
+        });
           
-      // Add Building filter to the map
-     view.ui.add(selectFilter, "bottom-right");
+        // Add Building filter to the map
+        view.ui.add(selectFilter, "bottom-right");
 
-     // Server-side filter
-     function setFeatureLayerFilter(expression) {
-        footprintsLayer.definitionExpression = expression;
-     }
+        // Server-side filter
+        function setFeatureLayerFilter(expression) {
+            footprintsLayer.definitionExpression = expression;
+        }
 
-     // Event listener
-     selectFilter.addEventListener('change', function (event) {
-        setFeatureLayerFilter(event.target.value);
-     });
+        // Event listener
+        selectFilter.addEventListener('change', function (event) {
+            setFeatureLayerFilter(event.target.value);
+        });
 
-     // Add table of contents to turn on/off layers
-     const layerList = new LayerList({
-        view: view,
-     });
+        // Add table of contents to turn on/off layers
+        const layerList = new LayerList({
+            view: view,
+        });
 
-     // Create expand for layer list
-     const layerListexpand = new Expand({
-        view: view,
-        content: layerList,
-        expandTooltip: "Expand Table of Contents",
-        collapseTooltip: "Collapse Table of Contents",
-     });
+        // Create expand for layer list
+        const layerListexpand = new Expand({
+            view: view,
+            content: layerList,
+            expandTooltip: "Expand Table of Contents",
+            collapseTooltip: "Collapse Table of Contents",
+        });
 
-     // Add layer list to view
-     view.ui.add(layerListexpand, {
-        position: "top-right",
-        index: 1
-     })  
+        // Add layer list to view
+        view.ui.add(layerListexpand, {
+            position: "top-right",
+            index: 1
+        })  
 
-     // Create instructions with Expand widget
-     const instructions = document.createElement("div");
-        instructions.style.padding = "10px";
-        instructions.style.backgroundColor = "white";
-        instructions.style.width = "300px";
-        instructions.innerText = "This App shows the Building Footprints in Los Angeles County. " +  
-          "To edit the footprint shape, open the editor, click select, and click on a building to select it. " + 
-          "Once selected, click the building again to show each vertex of the footprint. " + 
-          "You can add additional vertices to change the shape by clicking the midpoint of each line segment."
+        // Create instructions with Expand widget
+        const instructions = document.createElement("div");
+            instructions.style.padding = "10px";
+            instructions.style.backgroundColor = "white";
+            instructions.style.width = "300px";
+            instructions.innerText = "This App shows the Building Footprints in Los Angeles County. " +  
+            "To edit the footprint shape, open the editor, click select, and click on a building to select it. " + 
+            "Once selected, click the building again to show each vertex of the footprint. " + 
+            "You can add additional vertices to change the shape by clicking the midpoint of each line segment."
 
-     // Add instructions to view
-     view.ui.add(new Expand({
-        expandIcon: "question",
-        expandTooltip: "Read Info",
-        collapseTooltip: "Collapse Info",
-        view: view,
-        content: instructions, 
-     }), "top-left"
-     );
+        // Add instructions to view
+        view.ui.add(new Expand({
+            expandIcon: "question",
+            expandTooltip: "Read Info",
+            collapseTooltip: "Collapse Info",
+            view: view,
+            content: instructions, 
+        }), "top-left"
+        );
 
-     // Create the legend
-     const legend = new Legend({
-        view: view,
-        layerInfos: [pointInfosfootprints]
-     });
+        // Create the legend
+        const legend = new Legend({
+            view: view,
+            layerInfos: [pointInfosfootprints]
+        });
 
-     // Create the expand legend
-     const legendExpand = new Expand({
-        view: view,
-        expandTooltip: "Expand Legend",
-        collapseTooltip: "Collapse Legend",
-        content: legend,
-     });
+        // Create the expand legend
+        const legendExpand = new Expand({
+            view: view,
+            expandTooltip: "Expand Legend",
+            collapseTooltip: "Collapse Legend",
+            content: legend,
+        });
 
-     view.ui.add(legendExpand, "bottom-left");  // Add legend to the view
+        view.ui.add(legendExpand, "bottom-left");  // Add legend to the view
 
-    });  
-  </script>
+        });  
   
-</head>
+        </script>
   
-<body>
-  <div id="viewDiv"></div>
-</body>
+    </head>
+  
+    <body>
+    
+        <div id="viewDiv"></div>
+    </body>
   
 </html>

@@ -52,7 +52,7 @@
             expandTooltip: "Expand Basemaps",
             collapseTooltip: "Collapse Basemaps",
             content: new BasemapGallery({
-            view: view,
+                view: view,
             })
         });
 
@@ -183,9 +183,7 @@
                         "<li>Code: {CODE}</li></ul>"
             },
         });
-          
-        // Add Building Footprints to the map
-        map.add(footprintsLayer); 
+        map.add(footprintsLayer); // Add Building Footprints to the map
 
         // Set the Building Footprint point layer's LayerInfo
         const pointInfosfootprints = {
@@ -214,7 +212,13 @@
         });
 
         // Create a UI with the filter expressions
-        const sqlExpressions = ["HEIGHT IS NOT NULL", "HEIGHT < 12", "HEIGHT < 21", "HEIGHT < 41", "HEIGHT < 93", "HEIGHT >= 93", "NO BUILDINGS"];
+        const sqlExpressions = ["HEIGHT IS NOT NULL", 
+                                "HEIGHT < 12", 
+                                "HEIGHT < 21", 
+                                "HEIGHT < 41", 
+                                "HEIGHT < 93", 
+                                "HEIGHT >= 93", 
+                                "NO BUILDINGS"];
 
         // UI
         const selectFilter = document.createElement("select");
@@ -222,10 +226,10 @@
         selectFilter.setAttribute("style", "width: 250px; font-family: Avenir Next W00; font-size: 1em;");
 
         sqlExpressions.forEach(function(sql){
-        let option = document.createElement("option");
-            option.value = sql;
-            option.innerHTML = sql;
-            selectFilter.appendChild(option);
+            let option = document.createElement("option");
+                option.value = sql;
+                option.innerHTML = sql;
+                selectFilter.appendChild(option);
         });
           
         // Add Building filter to the map
@@ -293,7 +297,6 @@
             collapseTooltip: "Collapse Legend",
             content: legend,
         });
-
         view.ui.add(legendExpand, "bottom-left");  // Add legend to the view
 
         });  
@@ -303,7 +306,6 @@
     </head>
   
     <body>
-    
         <div id="viewDiv"></div>
     </body>
   

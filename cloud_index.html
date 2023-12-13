@@ -11,7 +11,7 @@
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         crossorigin="anonymous"></script>
         
-        <! -- leafelt css -->
+        <!-- leafelt css -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
         
         <!-- bootstrap -->
@@ -115,48 +115,46 @@
     // wfs request and styling
     $.ajax(
         'http://100.24.7.64:8080/geoserver/FinalProject/wfs', 
-        {
-        type: 'GET',
-        data: {
-            service: 'WFS',
-            request: 'GetFeature',
-            typename: 'FinalProject:LA_Buildings_Sample',
-            srsname: 'EPSG:4326',
-            outputFormat: 'text/javascript',
-        },
-
+            {
+            type: 'GET',
+            data: {
+                service: 'WFS',
+                request: 'GetFeature',
+                typename: 'FinalProject:LA_Buildings_Sample',
+                srsname: 'EPSG:4326',
+                outputFormat: 'text/javascript',
+            },
         dataType: 'jsonp',
         jsonpCallback:'callback:handleJson',
         jsonp:'format_options',
-        });
+    });
     
-        // Style building footprint by height (darker blue is taller)
-        function buildingstyle (feature) {
-            var colorToUse;
-            var height = feature.properties.height;
-            
-            if (height < 12) colorToUse = '#fceffc';
-            else if (height < 21) colorToUse = '#bdc9e1';
-            else if (height < 41) colorToUse = '#74a9cf';
-            else if (height < 93) colorToUse = '#2b8cbe';
-            else colorToUse = '#045a8d';
-            
-            return {
-                "color": colorToUse,
-                "fillOpacity": 1,
-                "opacity": 1,
-            };
-        }
-    
-        function handleJson(data) {
-  
+    // Style building footprint by height (darker blue is taller)
+    function buildingstyle (feature) {
+        var colorToUse;
+        var height = feature.properties.height;
+        
+        if (height < 12) colorToUse = '#fceffc';
+        else if (height < 21) colorToUse = '#bdc9e1';
+        else if (height < 41) colorToUse = '#74a9cf';
+        else if (height < 93) colorToUse = '#2b8cbe';
+        else colorToUse = '#045a8d';
+        
+        return {
+            "color": colorToUse,
+            "fillOpacity": 1,
+            "opacity": 1,
+        };
+    }
+
+    function handleJson(data) {
         selectedArea = L.geoJson(data, {
             style: buildingstyle,
             onEachFeature: function(feature, layer) {
                 layer.bindPopup('Building Height: ' + feature.properties.HEIGHT+ " feet");
             }
         }).addTo(buildings);  
-        }
+    }
     
     // Group layers together for layer control - only one in this case
     const overlays = {
